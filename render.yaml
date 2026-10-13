@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: campusswap-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: campusswap-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: campusswap-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: campusswap-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: campusswap-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: campusswap-db
+          property: password
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://campusswap-frontend-hazel.vercel.app
+
+databases:
+  - name: campusswap-db
+    databaseName: campusswap
+    user: campusswap
+    plan: free
+    region: oregon
